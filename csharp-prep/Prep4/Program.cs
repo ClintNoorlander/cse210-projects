@@ -24,7 +24,7 @@ class Program
                 values.Add(number);
                 done = "no";
             }
-        }while (done == "no");
+        } while (done == "no");
 
         int size = values.Count;
         int total = values.Sum();

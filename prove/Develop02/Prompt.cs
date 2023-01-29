@@ -1,23 +1,18 @@
 using System;
 
-public class Prompt
+class RandomPromptGenerator
 {
-    public static void main()
-    {
-        string[] prompts = 
-        {
-        "What was the coolest animal you saw today?", 
-        "Who did you serve today?", 
-        "How where you blessed today?",
-        "What were you grateful for today?",
-        "What music genre did you listen to most today?",
-        "How were your assignments today?"
-        };
+    public List<string> promptList;
 
-    Random rand = new Random(); 
-    int index = rand.Next(prompts.Length);
-    Console.WriteLine($"{prompts[index]}"); 
+    public RandomPromptGenerator(List<string> promptList)
+    {
+        this.promptList = promptList;
     }
 
-
+    public string GetRandomPrompt()
+    {
+        Random rnd = new Random();
+        int index = rnd.Next(promptList.Count);
+        return promptList[index];
+    }
 }

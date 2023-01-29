@@ -1,0 +1,22 @@
+1
+2
+3
+4
+5
+1
+2
+3
+4
+5
+Date: 1/28/2023 7:06:52 PM, Prompt - What was your favorite thing you did today? Response: poop
+Date: 1/28/2023 7:06:54 PM, Prompt - What was your favorite thing you did today? Response: pee
+1
+2
+3
+4
+5
+Date: 1/28/2023 7:06:52 PM, Prompt - What was your favorite thing you did today? Response: poop
+Date: 1/28/2023 7:06:54 PM, Prompt - What was your favorite thing you did today? Response: pee
+Date: 1/28/2023 7:06:52 PM, Prompt - What was your favorite thing you did today? Response: poop
+Date: 1/28/2023 7:06:54 PM, Prompt - What was your favorite thing you did today? Response: pee
+Date: 1/28/2023 7:07:16 PM, Prompt - Who were you most grateful for today? Why? Response: poop
