@@ -20,3 +20,4 @@ Date: 1/28/2023 7:06:54 PM, Prompt - What was your favorite thing you did today?
 Date: 1/28/2023 7:06:52 PM, Prompt - What was your favorite thing you did today? Response: poop
 Date: 1/28/2023 7:06:54 PM, Prompt - What was your favorite thing you did today? Response: pee
 Date: 1/28/2023 7:07:16 PM, Prompt - Who were you most grateful for today? Why? Response: poop
+Date: 2/7/2023 9:41:53 AM, Prompt - What was your favorite thing you did today? Response: dkjf;jsfs
