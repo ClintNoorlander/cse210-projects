@@ -1,84 +1,78 @@
 using System;
-using System.Collections.Generic;
 
-class GoalManager
+public class GoalManager
 {
-    private List<Goal> goals = new List<Goal>();
+    public List<Goal> goals;
+    public int score;
 
-    public void AddSimpleGoal(string name, int points)
+    public GoalManager()
     {
-        Goal goal = new SimpleGoal(name, points);
-        goals.Add(goal);
+        goals = new List<Goal>();
+        score = 0;
     }
 
-    public void AddEternalGoal(string name, int points)
+    public void CreateSimpleGoal(string name, int value)
     {
-        Goal goal = new EternalGoal(name, points);
-        goals.Add(goal);
+        goals.Add(new SimpleGoal(name, value));
     }
 
-    public void AddChecklistGoal(string name, int pointsPerCompletion, int requiredCompletions, int bonusPoints)
+    public void CreateEternalGoal(string name, int value)
     {
-        Goal goal = new ChecklistGoal(name, pointsPerCompletion, requiredCompletions, bonusPoints);
-        goals.Add(goal);
+        goals.Add(new EternalGoal(name, value));
     }
 
-    public void RecordEvent(string name)
+    public void CreateChecklistGoal(string name, int value, int targetCount, int bonusValue)
+    {
+        goals.Add(new ChecklistGoal(name, value, targetCount, bonusValue));
+    }
+
+    
+
+    public void RecordEvent(int index)
+    {
+        if (index < 0 || index >= goals.Count)
+        {
+            Console.WriteLine("Invalid goal index.");
+            return;
+        }
+        goals[index].RecordEvent();
+        score += goals[index].value;
+    }
+
+    public void DisplayGoals()
+    {
+        Console.WriteLine("Goals:");
+        for (int i = 0; i < goals.Count; i++)
+        {
+            Console.Write($"[{(goals[i] is ChecklistGoal && ((ChecklistGoal)goals[i]).count == ((ChecklistGoal)goals[i]).targetCount ? "X" : " ")}] ");
+            Console.WriteLine(goals[i]);
+        }
+
+        Console.WriteLine($"Score: {score}");
+    }
+    public string GetGoalName(int id)
     {
         foreach (Goal goal in goals)
         {
-            if (goal.Name == name)
+            if (goal.Id == id)
             {
-                goal.RecordEvent();
+                return goal.Name;
             }
         }
+        
+        return null;
     }
 
-    public void PrintGoals()
+    public void SaveGoals(List<Goal> goals)
     {
-        foreach (Goal goal in goals)
-        {
-            Console.Write("[");
-            if (goal.Completed)
-            {
-                Console.Write("X");
-            }
-            else
-            {
-                Console.Write(" ");
-            }
-            Console.Write("] ");
-            Console.Write(goal.Name);
 
-            if (goal is ChecklistGoal)
-            {
-                ChecklistGoal checklistGoal = (ChecklistGoal)goal;
-                Console.Write(" (Completed {0}/{1} times)", checklistGoal.Completions, checklistGoal.RequiredCompletions);
-            }
-
-            Console.WriteLine();
-        }
-    }
-
-    public void PrintScore()
-    {
-        int score = 0;
-        foreach (Goal goal in goals)
-        {
-            score += goal.Score;
-        }
-        Console.WriteLine("Score: {0}", score);
-    }
-
-    public void SaveGoals()
-    {
-        // TODO: Implement save functionality
-        Console.WriteLine("Goals saved.");
     }
 
     public void LoadGoals()
     {
-        // TODO: Implement load functionality
-        Console.WriteLine("Goals loaded.");
+        
     }
+
 }
+
+

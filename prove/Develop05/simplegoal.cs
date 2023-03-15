@@ -1,11 +1,12 @@
+using System;
 public class SimpleGoal : Goal
 {
-    public SimpleGoal(string name, int points) : base(name, points)
+    public SimpleGoal(string name, int value) : base(name, value)
     {
     }
 
-    public override string GetGoalType()
+    public override void RecordEvent()
     {
-        return "Simple";
+        Console.WriteLine($"Congratulations! You have completed the goal '{name}' and gained {value} points.");
     }
 }

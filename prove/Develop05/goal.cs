@@ -1,35 +1,21 @@
+using System;
 public abstract class Goal
 {
-    protected string _name;
-    protected int _points;
-    protected bool _completed;
+    public int Id { get; set; }
 
-    public Goal(string name, int points)
+    public string name;
+    public int value;
+
+    public Goal(string name, int value)
     {
-        _name = name;
-        _points = points;
-        _completed = false;
+        this.name = name;
+        this.value = value;
     }
 
-    public string GetName()
-    {
-        return _name;
-    }
+    public abstract void RecordEvent();
 
-    public int GetPoints()
+    public override string ToString()
     {
-        return _points;
+        return $"{name} ({value} points)";
     }
-
-    public bool IsCompleted()
-    {
-        return _completed;
-    }
-
-    public virtual void MarkCompleted()
-    {
-        _completed = true;
-    }
-
-    public abstract string GetGoalType();
 }

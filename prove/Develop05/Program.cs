@@ -1,126 +1,82 @@
 using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
-class Program
+public static class Program
 {
-    static void Main(string[] args)
+    public static void Main()
     {
-        GoalManager goalManager = new GoalManager();
+        GoalManager manager = new GoalManager();
 
         while (true)
         {
-            Console.WriteLine("Enter option number:");
-            Console.WriteLine("1. Add goal");
-            Console.WriteLine("2. Record event");
-            Console.WriteLine("3. Display goals");
-            Console.WriteLine("4. Save goals to file");
-            Console.WriteLine("5. Load goals from file");
-            Console.WriteLine("6. Exit");
+            Console.WriteLine();
+            Console.WriteLine("1. Create simple goal");
+            Console.WriteLine("2. Create eternal goal");
+            Console.WriteLine("3. Create checklist goal");
+            Console.WriteLine("4. Record event");
+            Console.WriteLine("5. Display goals");
+            Console.WriteLine("6. Save goals");
+            Console.WriteLine("7. Load goals");
+            Console.WriteLine("8. Quit");
+            Console.Write("Enter choice: ");
+            string choice = Console.ReadLine();
 
-            int option = int.Parse(Console.ReadLine());
-
-            switch (option)
+            switch (choice)
             {
-                case 1:
-                    AddGoal(goalManager);
+                case "1":
+                    Console.Write("Enter goal name: ");
+                    string simpleName = Console.ReadLine();
+                    Console.Write("Enter point value: ");
+                    int simpleValue = int.Parse(Console.ReadLine());
+                    manager.CreateSimpleGoal(simpleName, simpleValue);
+                    Console.WriteLine($"Created simple goal '{simpleName}' worth {simpleValue} points.");
                     break;
-                case 2:
-                    RecordEvent(goalManager);
+                case "2":
+                    Console.Write("Enter goal name: ");
+                    string eternalName = Console.ReadLine();
+                    Console.Write("Enter point value: ");
+                    int eternalValue = int.Parse(Console.ReadLine());
+                    manager.CreateEternalGoal(eternalName, eternalValue);
+                    Console.WriteLine($"Created eternal goal '{eternalName}' worth {eternalValue} points.");
                     break;
-                case 3:
-                    DisplayGoals(goalManager);
+                case "3":
+                    Console.Write("Enter goal name: ");
+                    string checklistName = Console.ReadLine();
+                    Console.Write("Enter point value: ");
+                    int checklistValue = int.Parse(Console.ReadLine());
+                    Console.Write("Enter target count: ");
+                    int targetCount = int.Parse(Console.ReadLine());
+                    Console.Write("Enter bonus value: ");
+                    int bonusValue = int.Parse(Console.ReadLine());
+                    manager.CreateChecklistGoal(checklistName, checklistValue, targetCount, bonusValue);
+                    Console.WriteLine($"Created checklist goal '{checklistName}' worth {checklistValue} points, with a target count of {targetCount} and a bonus of {bonusValue} points.");
                     break;
-                case 4:
-                    SaveGoalsToFile(goalManager);
+                case "4":
+                    Console.Write("Enter goal index: ");
+                    int index = int.Parse(Console.ReadLine());
+                    manager.RecordEvent(index);
+                    Console.WriteLine($"Recorded event for goal '{manager.GetGoalName(index)}'.");
                     break;
-                case 5:
-                    LoadGoalsFromFile(goalManager);
+                case "5":
+                    manager.DisplayGoals();
                     break;
-                case 6:
-                    Console.WriteLine("Goodbye!");
+                case "6":
+                    Console.Write("Enter file path: ");
+                    string savePath = Console.ReadLine();
+                    manager.SaveGoals(savePath);
+                    Console.WriteLine($"Goals saved to '{savePath}'.");
+                    break;
+                case "7":
+                    Console.Write("Enter file path: ");
+                    string loadPath = Console.ReadLine();
+                    manager.LoadGoals(loadPath);
+                    Console.WriteLine($"Goals loaded from '{loadPath}'.");
+                    break;
+                case "8":
                     return;
                 default:
-                    Console.WriteLine("Invalid option.");
+                    Console.WriteLine("Invalid choice.");
                     break;
             }
-
-            Console.WriteLine();
-        }
-    }
-
-    private static void AddGoal(GoalManager goalManager)
-    {
-        Console.WriteLine("Enter goal name:");
-        string name = Console.ReadLine();
-
-        Console.WriteLine("Enter goal type (Simple, Eternal, or Checklist):");
-        string type = Console.ReadLine();
-
-        Console.WriteLine("Enter points earned:");
-        int points = int.Parse(Console.ReadLine());
-
-        switch (type)
-        {
-            case "Simple":
-                goalManager.AddSimpleGoal(name, points);
-                break;
-            case "Eternal":
-                goalManager.AddEternalGoal(name, points);
-                break;
-            case "Checklist":
-                Console.WriteLine("Enter number of times to complete:");
-                int completionCount = int.Parse(Console.ReadLine());
-                goalManager.AddChecklistGoal(name, points, completionCount);
-                break;
-            default:
-                Console.WriteLine("Invalid goal type.");
-                break;
-        }
-
-        Console.WriteLine("Goal added.");
-    }
-
-    private static void RecordEvent(GoalManager goalManager)
-    {
-        Console.WriteLine("Enter goal name:");
-        string name = Console.ReadLine();
-
-        goalManager.RecordEvent(name);
-
-        Console.WriteLine("Event recorded.");
-    }
-
-    private static void DisplayGoals(GoalManager goalManager)
-    {
-        goalManager.DisplayGoals();
-        Console.WriteLine("Total points: " + goalManager.GetTotalPoints().ToString());
-    }
-
-    private static void SaveGoalsToFile(GoalManager goalManager)
-    {
-        FileStream fileStream = new FileStream("goals.dat", FileMode.Create);
-        BinaryFormatter binaryFormatter = new BinaryFormatter();
-        binaryFormatter.Serialize(fileStream, goalManager);
-        fileStream.Close();
-
-        Console.WriteLine("Goals saved to file.");
-    }
-
-    private static void LoadGoalsFromFile(GoalManager goalManager)
-    {
-        if (File.Exists("goals.dat"))
-        {
-            FileStream fileStream = new FileStream("goals.dat", FileMode.Open);
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            goalManager = (GoalManager)binaryFormatter.Deserialize(fileStream);
-            fileStream.Close();
-
-            Console.WriteLine("Goals loaded from file.");
-        }
-        else
-        {
-            Console.WriteLine("File not found.");
         }
     }
 }
